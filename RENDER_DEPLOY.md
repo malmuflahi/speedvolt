@@ -12,8 +12,7 @@ Render will run:
 
 ```text
 pip install -r requirements.txt
-flask --app run init-db
-gunicorn run:app --bind 0.0.0.0:$PORT
+bash -c 'flask --app run init-db && gunicorn run:app --bind 0.0.0.0:$PORT'
 ```
 
 The free Render Postgres plan is good for testing, but it expires after 30 days. Use a paid database before relying on it for real customer orders.
