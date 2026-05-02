@@ -26,6 +26,11 @@
     </div>
 
     <div class="hero-panel">
+        <img
+            src="{{ url_for('static', filename='images/brand/IMG_0150.jpeg') }}"
+            alt="SpeedVolt LED strip packaging"
+            class="hero-product-image"
+        >
         <p class="mini-label">SpeedVolt Advantage</p>
         <h2>Wholesale ordering without the retail friction.</h2>
         <div class="panel-grid">
@@ -102,6 +107,9 @@
         {% for product in products %}
         <article class="product-card">
             <div class="product-media">
+                {% if product.image %}
+                <img src="{{ product.image }}" alt="{{ product.name }}">
+                {% endif %}
                 <span class="badge">{{ product.badge }}</span>
             </div>
 

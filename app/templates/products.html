@@ -47,6 +47,9 @@
         {% for product in products %}
         <article class="product-card">
             <div class="product-media">
+                {% if product.image %}
+                <img src="{{ product.image }}" alt="{{ product.name }}">
+                {% endif %}
                 <span class="badge">{{ product.badge }}</span>
             </div>
 
