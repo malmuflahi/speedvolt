@@ -62,7 +62,22 @@ function addProductFromButton(button) {
     }
 
     saveCart();
+    showAddedState(button);
     openCart();
+}
+
+function showAddedState(button) {
+    const originalText = button.textContent;
+
+    button.classList.add("is-added");
+    button.textContent = "Added";
+    button.disabled = true;
+
+    window.setTimeout(() => {
+        button.classList.remove("is-added");
+        button.textContent = originalText;
+        button.disabled = false;
+    }, 900);
 }
 
 function updateQuantity(productId, change) {

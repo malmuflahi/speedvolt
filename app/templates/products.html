@@ -23,18 +23,19 @@
 
         <select name="category">
             <option value="">All Categories</option>
-            <option value="Chargers">Chargers</option>
-            <option value="Cables">Cables</option>
-            <option value="Power Banks">Power Banks</option>
-            <option value="Car Accessories">Car Accessories</option>
+            <option value="Chargers" {% if category == "Chargers" %}selected{% endif %}>Chargers</option>
+            <option value="Cables" {% if category == "Cables" %}selected{% endif %}>Cables</option>
+            <option value="Power Banks" {% if category == "Power Banks" %}selected{% endif %}>Power Banks</option>
+            <option value="Car Accessories" {% if category == "Car Accessories" %}selected{% endif %}>Car Accessories</option>
+            <option value="Earphones" {% if category == "Earphones" %}selected{% endif %}>Earphones</option>
         </select>
 
         <select name="device">
             <option value="">All Devices</option>
-            <option value="iPhone 16">iPhone 16</option>
-            <option value="iPhone 15">iPhone 15</option>
-            <option value="Samsung S24">Samsung S24</option>
-            <option value="Universal USB-C">Universal USB-C</option>
+            <option value="iPhone 16" {% if device == "iPhone 16" %}selected{% endif %}>iPhone 16</option>
+            <option value="iPhone 15" {% if device == "iPhone 15" %}selected{% endif %}>iPhone 15</option>
+            <option value="Samsung S24" {% if device == "Samsung S24" %}selected{% endif %}>Samsung S24</option>
+            <option value="Universal USB-C" {% if device == "Universal USB-C" %}selected{% endif %}>Universal USB-C</option>
         </select>
 
         <button class="btn btn-primary" type="submit">Filter</button>
