@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout | SpeedVolt Wholesale{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+    <p class="eyebrow">Wholesale Checkout</p>
+    <h1>Confirm your business order.</h1>
+    <p>Enter customer and delivery details. Your order will be saved and invoice-ready.</p>
+</section>
+
+<section class="checkout-layout">
+    <form id="checkoutForm" class="checkout-card" data-place-order-url="{{ url_for('checkout.place_order') }}">
+        <h2>Delivery Details</h2>
+
+        <label>Business Name</label>
+        <input type="text" name="business_name" placeholder="Store or company name">
+
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Customer name" required>
+
+        <label>Phone Number</label>
+        <input type="tel" name="phone" placeholder="Phone number" required>
+
+        <label>Delivery Address</label>
+        <textarea name="address" placeholder="Full delivery address" required></textarea>
+
+        <label>Payment Method</label>
+        <select name="payment_method" required>
+            <option value="">Choose payment method</option>
+            <option value="Cash on Delivery">Cash on Delivery</option>
+            <option value="Online Payment">Online Payment</option>
+        </select>
+
+        <label>Notes</label>
+        <textarea name="notes" placeholder="Optional order notes"></textarea>
+
+        <button type="submit" class="btn btn-primary full">Place Wholesale Order</button>
+
+        <p id="checkoutMessage" class="form-message"></p>
+    </form>
+
+    <aside class="order-review">
+        <h2>Order Review</h2>
+        <div id="checkoutItems"></div>
+
+        <div class="summary-line checkout-total">
+            <span>Total</span>
+            <strong>$<span id="checkoutTotal">0.00</span></strong>
+        </div>
+    </aside>
+</section>
+
+{% endblock %}

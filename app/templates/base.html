@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}SpeedVolt Wholesale{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="SpeedVolt B2B wholesale ordering portal for premium phone accessories.">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="{{ url_for('main.home') }}" class="brand">
+        <img src="{{ url_for('static', filename='images/speedvolt_logo_transparent.png') }}" alt="SpeedVolt logo" class="brand-logo">
+    </a>
+
+    <nav class="desktop-nav">
+        <a href="{{ url_for('main.home') }}">Home</a>
+        <a href="{{ url_for('product.products') }}">Products</a>
+        <a href="{{ url_for('checkout.checkout') }}">Checkout</a>
+        <a href="{{ url_for('admin.orders') }}">Admin</a>
+    </nav>
+
+    <button class="cart-button" type="button" onclick="openCart()">
+        Cart
+        <span id="cartCount">0</span>
+    </button>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<div id="cartOverlay" class="cart-overlay" onclick="closeCart()"></div>
+
+<aside id="cartDrawer" class="cart-drawer">
+    <div class="cart-head">
+        <div>
+            <p class="mini-label">Wholesale Order</p>
+            <h3>Your Cart</h3>
+        </div>
+        <button type="button" onclick="closeCart()" class="close-cart">×</button>
+    </div>
+
+    <div id="cartItems" class="cart-items"></div>
+
+    <div class="cart-summary">
+        <div class="summary-line">
+            <span>Subtotal</span>
+            <strong>$<span id="cartSubtotal">0.00</span></strong>
+        </div>
+
+        <p class="cart-note">
+            Final delivery/payment terms can be confirmed after order review.
+        </p>
+
+        <a href="{{ url_for('checkout.checkout') }}" class="btn btn-primary full">Continue to Checkout</a>
+    </div>
+</aside>
+
+<div class="mobile-cart-bar">
+    <button type="button" onclick="openCart()">
+        View Cart · <span id="mobileCartCount">0</span> items · $<span id="mobileCartTotal">0.00</span>
+    </button>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

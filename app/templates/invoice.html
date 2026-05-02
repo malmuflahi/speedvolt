@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Invoice {{ invoice_id }} | SpeedVolt{% endblock %}
+
+{% block content %}
+
+<section class="invoice-wrap">
+    <div class="invoice-card">
+        <div class="invoice-top">
+            <div>
+                <h1>SpeedVolt</h1>
+                <p>Wholesale Phone Accessories</p>
+            </div>
+
+            <div class="invoice-meta">
+                <strong>Invoice {{ invoice_id }}</strong>
+                <span>Status: {{ order.status }}</span>
+                <span>Payment: {{ order.payment_method }}</span>
+            </div>
+        </div>
+
+        <div class="invoice-info">
+            <div>
+                <p class="mini-label">Bill To</p>
+                <h3>{{ order.customer.name }}</h3>
+                <p>{{ order.customer.business_name or "No business name" }}</p>
+                <p>{{ order.customer.phone }}</p>
+                <p>{{ order.customer.address }}</p>
+            </div>
+
+            <div>
+                <p class="mini-label">Order Details</p>
+                <p>Order ID: {{ invoice_id }}</p>
+                <p>Date: {{ order.created_at.strftime("%b %d, %Y") }}</p>
+            </div>
+        </div>
+
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Unit</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order.items %}
+                <tr>
+                    <td>{{ item.product_name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ "%.2f"|format(item.unit_price) }}</td>
+                    <td>${{ "%.2f"|format(item.line_total) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="invoice-total">
+            <span>Total</span>
+            <strong>${{ "%.2f"|format(order.total) }}</strong>
+        </div>
+
+        {% if order.notes %}
+        <div class="invoice-notes">
+            <p class="mini-label">Notes</p>
+            <p>{{ order.notes }}</p>
+        </div>
+        {% endif %}
+
+        <div class="invoice-actions">
+            <button onclick="window.print()" class="btn btn-primary">Print Invoice</button>
+            <a href="{{ url_for('product.products') }}" class="btn btn-secondary">New Order</a>
+            <a href="{{ url_for('admin.orders') }}" class="btn btn-secondary">Admin Orders</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

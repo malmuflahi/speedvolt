@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Wholesale Products | SpeedVolt{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+    <p class="eyebrow">Wholesale Catalog</p>
+    <h1>Order phone accessories with speed and clarity.</h1>
+    <p>
+        Filter by category or device, choose quantities, and build a wholesale cart without friction.
+    </p>
+</section>
+
+<section class="catalog-tools">
+    <form method="GET" action="{{ url_for('product.products') }}" class="catalog-form">
+        <input
+            type="text"
+            name="search"
+            placeholder="Search chargers, cables, power banks..."
+            value="{{ search or '' }}"
+        >
+
+        <select name="category">
+            <option value="">All Categories</option>
+            <option value="Chargers">Chargers</option>
+            <option value="Cables">Cables</option>
+            <option value="Power Banks">Power Banks</option>
+            <option value="Car Accessories">Car Accessories</option>
+        </select>
+
+        <select name="device">
+            <option value="">All Devices</option>
+            <option value="iPhone 16">iPhone 16</option>
+            <option value="iPhone 15">iPhone 15</option>
+            <option value="Samsung S24">Samsung S24</option>
+            <option value="Universal USB-C">Universal USB-C</option>
+        </select>
+
+        <button class="btn btn-primary" type="submit">Filter</button>
+    </form>
+</section>
+
+<section class="section catalog-section">
+    {% if products %}
+    <div class="product-grid">
+        {% for product in products %}
+        <article class="product-card">
+            <div class="product-media">
+                <span class="badge">{{ product.badge }}</span>
+            </div>
+
+            <div class="product-body">
+                <div class="product-topline">
+                    <span>{{ product.category }}</span>
+                    <span>MOQ {{ product.min_qty }}</span>
+                </div>
+
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+
+                <div class="feature-pills">
+                    <span>{{ product.feature_1 }}</span>
+                    <span>{{ product.feature_2 }}</span>
+                    <span>{{ product.feature_3 }}</span>
+                </div>
+
+                <div class="price-line">
+                    <div>
+                        <small>Wholesale price</small>
+                        <strong>${{ "%.2f"|format(product.wholesale_price) }}</strong>
+                    </div>
+
+                    <div class="qty-mini">
+                        <label>Qty</label>
+                        <input
+                            id="qty-{{ product.id }}"
+                            type="number"
+                            min="{{ product.min_qty }}"
+                            value="{{ product.min_qty }}"
+                        >
+                    </div>
+                </div>
+
+                <button
+                    class="btn btn-primary full"
+                    type="button"
+                    data-product='{{ product.to_dict() | tojson }}'
+                    onclick="addProductFromButton(this)">
+                    Add to Cart
+                </button>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <h2>No products found</h2>
+        <p>Try changing the category, device, or search keyword.</p>
+        <a href="{{ url_for('product.products') }}" class="btn btn-primary">Reset Filters</a>
+    </div>
+    {% endif %}
+</section>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: speedvolt
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    preDeployCommand: flask --app run init-db
+    startCommand: gunicorn run:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: speedvolt-db
+          property: connectionString
+
+databases:
+  - name: speedvolt-db
+    plan: free
+    databaseName: speedvolt
+    user: speedvolt

@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}SpeedVolt Wholesale | Premium Phone Accessories{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-copy">
+        <p class="eyebrow">B2B Wholesale Portal</p>
+        <h1>Premium phone accessories built for stores, resellers, and distributors.</h1>
+        <p class="hero-subtitle">
+            Fast-moving chargers, cables, car holders, and power banks with wholesale pricing,
+            clean invoices, and a mobile-first ordering flow.
+        </p>
+
+        <div class="hero-actions">
+            <a href="{{ url_for('product.products') }}" class="btn btn-primary">Shop Wholesale</a>
+            <a href="#device-shop" class="btn btn-secondary">Shop by Device</a>
+        </div>
+
+        <div class="hero-proof">
+            <span>⚡ Fast Charging</span>
+            <span>📦 Bulk Ready</span>
+            <span>🧾 Invoice Ready</span>
+        </div>
+    </div>
+
+    <div class="hero-panel">
+        <p class="mini-label">SpeedVolt Advantage</p>
+        <h2>Wholesale ordering without the retail friction.</h2>
+        <div class="panel-grid">
+            <div>
+                <strong>MOQ</strong>
+                <span>Built into product cards</span>
+            </div>
+            <div>
+                <strong>Cart</strong>
+                <span>Fast quantity editing</span>
+            </div>
+            <div>
+                <strong>Invoice</strong>
+                <span>Print-ready receipt</span>
+            </div>
+            <div>
+                <strong>Admin</strong>
+                <span>Order tracking</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="device-shop">
+    <div class="section-head">
+        <p class="eyebrow">Shop by Device</p>
+        <h2>Help buyers find compatible accessories fast.</h2>
+    </div>
+
+    <div class="device-grid">
+        <a href="{{ url_for('product.products', device='iPhone 16') }}" class="device-card">
+            <span>iPhone 16 Series</span>
+            <strong>USB-C cables, chargers, holders</strong>
+        </a>
+        <a href="{{ url_for('product.products', device='iPhone 15') }}" class="device-card">
+            <span>iPhone 15 Series</span>
+            <strong>USB-C fast charging products</strong>
+        </a>
+        <a href="{{ url_for('product.products', device='Samsung S24') }}" class="device-card">
+            <span>Samsung S24</span>
+            <strong>High-output charging accessories</strong>
+        </a>
+        <a href="{{ url_for('product.products', device='Universal USB-C') }}" class="device-card">
+            <span>Universal USB-C</span>
+            <strong>Wholesale best sellers</strong>
+        </a>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <p class="eyebrow">Shop by Category</p>
+        <h2>Built for fast B2B buying.</h2>
+    </div>
+
+    <div class="category-grid">
+        <a href="{{ url_for('product.products', category='Chargers') }}" class="category-card">Chargers</a>
+        <a href="{{ url_for('product.products', category='Cables') }}" class="category-card">Cables</a>
+        <a href="{{ url_for('product.products', category='Power Banks') }}" class="category-card">Power Banks</a>
+        <a href="{{ url_for('product.products', category='Car Accessories') }}" class="category-card">Car Accessories</a>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head split">
+        <div>
+            <p class="eyebrow">Featured Wholesale Products</p>
+            <h2>Fast movers for accessory businesses.</h2>
+        </div>
+        <a href="{{ url_for('product.products') }}" class="text-link">View all products →</a>
+    </div>
+
+    <div class="product-grid">
+        {% for product in products %}
+        <article class="product-card">
+            <div class="product-media">
+                <span class="badge">{{ product.badge }}</span>
+            </div>
+
+            <div class="product-body">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+
+                <div class="feature-pills">
+                    <span>{{ product.feature_1 }}</span>
+                    <span>{{ product.feature_2 }}</span>
+                    <span>MOQ {{ product.min_qty }}</span>
+                </div>
+
+                <div class="price-line">
+                    <div>
+                        <small>Wholesale price</small>
+                        <strong>${{ "%.2f"|format(product.wholesale_price) }}</strong>
+                    </div>
+                    <div class="qty-mini">
+                        <label>Qty</label>
+                        <input id="qty-{{ product.id }}" type="number" min="{{ product.min_qty }}" value="{{ product.min_qty }}">
+                    </div>
+                </div>
+
+                <button
+                    class="btn btn-primary full"
+                    type="button"
+                    data-product='{{ product.to_dict() | tojson }}'
+                    onclick="addProductFromButton(this)">
+                    Add to Cart
+                </button>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="trust-band">
+    <div>
+        <strong>Wholesale-first</strong>
+        <span>Designed for business buyers, not random retail browsing.</span>
+    </div>
+    <div>
+        <strong>Fast checkout</strong>
+        <span>Buyers can place orders from their phone in minutes.</span>
+    </div>
+    <div>
+        <strong>Professional invoices</strong>
+        <span>Clean order documents for stores and resellers.</span>
+    </div>
+</section>
+
+{% endblock %}
